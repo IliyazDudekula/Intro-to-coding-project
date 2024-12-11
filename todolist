@@ -1,0 +1,52 @@
+# Importing the required Tkinter library
+import tkinter as tk
+from tkinter import messagebox
+
+# Functionality for the To-Do List
+def add_task():
+    task = task_input.get()
+    if task:
+        task_listbox.insert(tk.END, task)
+        task_input.delete(0, tk.END)
+    else:
+        messagebox.showwarning("Warning", "Task cannot be empty!")
+
+def remove_task():
+    try:
+        selected_task_index = task_listbox.curselection()[0]
+        task_listbox.delete(selected_task_index)
+    except IndexError:
+        messagebox.showwarning("Warning", "Please select a task to remove!")
+
+def clear_all_tasks():
+    task_listbox.delete(0, tk.END)
+
+# Creating the main application window
+root = tk.Tk()
+root.title("To-Do List App")
+root.geometry("400x400")
+
+# Title label
+title_label = tk.Label(root, text="To-Do List", font=("Arial", 16))
+title_label.pack(pady=10)
+
+# Entry widget for task input
+task_input = tk.Entry(root, font=("Arial", 14), width=25)
+task_input.pack(pady=5)
+
+# Buttons for task operations
+add_button = tk.Button(root, text="Add Task", font=("Arial", 12), command=add_task)
+add_button.pack(pady=5)
+
+remove_button = tk.Button(root, text="Remove Task", font=("Arial", 12), command=remove_task)
+remove_button.pack(pady=5)
+
+clear_button = tk.Button(root, text="Clear All Tasks", font=("Arial", 12), command=clear_all_tasks)
+clear_button.pack(pady=5)
+
+# Listbox to display tasks
+task_listbox = tk.Listbox(root, font=("Arial", 12), width=30, height=10, selectmode=tk.SINGLE)
+task_listbox.pack(pady=10)
+
+# Run the Tkinter event loop
+root.mainloop()
